@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<h:outputStylesheet name="common-style.css" library="css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true" resizeTitle="resize">
+		<p:layoutUnit position="north" size="70" id="north">
+			<ui:insert name="header">
+				<ui:include src="Header.xhtml" />
+
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit position="west" id="sidebar" resizable="false"
+			layout="block" rendered="#{not hideFooterAndSidebar}"
+			header="Sidebar" style="height:380px;overflow:hidden;"
+			size="225">
+			<ui:insert name="sidebar">
+				<ui:include src="Sidebar.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+
+		<p:layoutUnit styleClass="layoutUnitCenter" position="center" style="height:380px;overflow:hidden;">
+			<ui:insert name="content">
+				<ui:include src="Content.xhtml" />
+			</ui:insert>
+		</p:layoutUnit>
+
+
+
+		<p:layoutUnit position="south" resizable="true" id="footer"
+			layout="block" rendered="#{not hideFooterAndSidebar}">
+			<ui:insert name="footer">
+
+				<ui:include src="Footer.xhtml" />
+			</ui:insert>
+
+		</p:layoutUnit>
+	</p:layout>
+
+
+</h:body>
+
+</html>

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:jr="http://jasperreportjsf.sf.net/tld/jasperreports-jsf-1_2.tld"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<h:outputStylesheet name="common-style.css" library="css" />
+	<script type="text/javascript"
+		src="resources/bootstrap/js/jquery-1.9.1.min.js"></script>
+
+</h:head>
+<h:body>
+	<h:outputStylesheet library="css"
+		name="../../resources/bootstrap/css/style.css" />
+
+
+	<ui:composition template="/WEB-INF/template/Layout.xhtml">
+		<ui:define name="header">
+			<h:graphicImage width="1140" height="55" library="images"
+				value="/resources/banner.png" />
+		</ui:define>
+
+		<ui:define name="sidebar">
+
+			<ui:include src="/views/Sidebar.xhtml"></ui:include>
+
+		</ui:define>
+
+
+		<ui:define name="content">
+
+			<script type="text/javascript">  
+   		 function handleSubmitRequest(xhr, status, args, dialogName, formName) {  
+            clearForm(formName);
+            dialogName.hide(); 
+        }  
+    }
+    function clearForm(formName){
+        jQuery('#'+formName).each(function(){
+	        this.reset();
+	});
+    }
+    </script>
+
+
+
+			<p:dialog id="addUserDialog" header="Add User" appendToBody="true"
+				widgetVar="addUser">
+				<h:form id="addUserFormId" prependId="false">
+					<ui:include src="/views/AddUser.xhtml" />
+					<p:commandButton id="ajax" value="Add"
+						styleClass="ui-priority-primary" update=":addUserFormId:addPanel"
+						oncomplete="handleSubmitRequest(xhr, status, args, addUserDialog, addUserFormId"
+						actionListener="#{userMB.addUser(event)}">
+						<f:ajax render="@form" resetValues="true" />
+					</p:commandButton>
+
+					<p:commandButton id="cancelButtonId" value="Cancel"
+						onclick="addUserDialog.hide()">
+					</p:commandButton>
+
+				</h:form>
+			</p:dialog>
+
+
+			<p:dialog id="editUserDialogId" header="Edit User"
+				widgetVar="editUserDialog" appendToBody="true">
+				<p:outputPanel id="dialogPanel">
+					<h:form id="editUserFromId">
+						<ui:include src="/views/EditUser.xhtml"></ui:include>
+						<p:commandButton id="editajaxId" value="Update"
+							styleClass="ui-priority-primary"
+							oncomplete="handleSubmitRequest(xhr, status, args, editUserDialog,editUserFromId"
+							actionListener="#{userMB.updateUser(event)}">
+						</p:commandButton>
+						<p:commandButton id="cancelUpdateButtonId" value="Cancel"
+							onclick="editUserDialogId.hide()">
+						</p:commandButton>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+
+
+
+			<h:form id="userForm">
+
+				<p:dataTable id="userTableId" var="userTable"
+					value="#{userMB.userDataModel}" paginator="true" editable="true"
+					selection="#{userMB.selectedUsers}" rows="10">
+
+
+					<f:facet name="header">	
+         					  User Management
+          			 <p:commandButton value="Add" type="button"
+							update=":addUserFormId:addPanel" onclick="addUser.show()">
+						</p:commandButton>
+
+						<p:commandButton value="Delete" update=":userForm:userTableId"
+							actionListener="#{userMB.deleteUser(event)}">
+						</p:commandButton>
+
+						<p:commandButton value="Print" type="button" icon="ui-icon-print">
+							<p:printer target="userTableId" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column selectionMode="multiple" style="width:2%" />
+
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="Edit" />
+						</f:facet>
+
+						<p:commandLink value="Edit" update=":editUserFromId:editpanel"
+							oncomplete="editUserDialog.show()" title="Update">
+							<f:setPropertyActionListener value="#{userTable}"
+								target="#{userMB.selectedUser}" />
+						</p:commandLink>
+					</p:column>
+
+					<p:column headerText="Username" style="width:25%">
+            #{userTable.username}
+        </p:column>
+
+					<p:column headerText="Password" style="width:25%">
+            #{userTable.password}
+        </p:column>
+
+					<p:column headerText="Role Name" style="width:24%">
+            #{userTable.role}
+        </p:column>
+
+				</p:dataTable>
+
+			</h:form>
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
+
+
+
+
+
+
+
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+</h:head>
+<h:body>
+	<ui:component id="addFormId">
+
+		<p:panelGrid id="addPanel" columns="2">
+
+			<h:outputLabel for="username" value="User Name: *" />
+			<p:inputText id="username"
+				value="#{userMB.user.username}"
+				label="User Name" />
+
+			<h:outputLabel for="password" value="Password *" />
+			<p:inputText id="password"
+				value="#{userMB.user.password}"
+				required="true" label="Password" />
+
+			<h:outputLabel for="role" value="Role *" />
+			<p:inputText id="role"
+				value="#{userMB.user.role}"
+				required="true" label="Role" />
+
+
+		</p:panelGrid>
+
+	</ui:component>>
+			
+</h:body>
+</html>
